@@ -10,6 +10,11 @@
                 <i class="bi bi-speedometer2 me-2"></i> Dashboard
             </a>
 
+            <a href="{{ route('admin.menuCategory.index') }}"
+               class="nav-link d-flex align-items-center px-3 py-2 {{ request()->routeIs('admin.menuCategory.index') ? 'active' : '' }}">
+                <i class="bi bi-journal-text me-2"></i> Menu Category
+            </a>
+
             <a href="#"
                class="nav-link d-flex align-items-center px-3 py-2 {{ request()->routeIs('admin.menu.*') ? 'active' : '' }}">
                 <i class="bi bi-journal-text me-2"></i> Menu Management

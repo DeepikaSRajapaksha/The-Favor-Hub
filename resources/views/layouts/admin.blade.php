@@ -6,6 +6,7 @@
     <title>@yield('title', 'Admin Dashboard') - The Flavor Hub</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <style>
         body {
             background-color: #cdcbcb;
@@ -58,6 +59,17 @@
             color: #ccc;
             text-align: center;
             padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .btn-primary {
+            background-color: #ffc107;
+            border: none;
+            transition: background-color 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #e0a800;
         }
         .sidebar .btn-danger {
             background-color: #dc3545;
@@ -76,6 +88,17 @@
             height: 100%;
             box-sizing: border-box;
         }
+        .btn-outline-primary i,
+        .btn-outline-danger i {
+            font-size: 1.1rem;
+            vertical-align: middle;
+        }
+
+        .btn-outline-primary:hover,
+        .btn-outline-danger:hover {
+            transform: scale(1.1);
+            transition: 0.2s ease;
+        }
     </style>
 </head>
 <body>
@@ -89,6 +112,8 @@
             {{-- Include Navbar --}}
             @include('Partial.admin-navbar')
 
+            @include('Partial.flash')
+
             @yield('content')
 
             <br>
@@ -98,6 +123,46 @@
 
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const alerts = document.querySelectorAll('.flash-container .alert');
+            alerts.forEach(alert => {
+                setTimeout(() => {
+                    alert.classList.remove('show');
+                    alert.classList.add('fade');
+                    setTimeout(() => alert.remove(), 300);
+                }, 4000);
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            // Select all delete buttons
+            const deleteButtons = document.querySelectorAll('.btn-delete');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function (e) {
+                    const form = this.closest('form'); // find parent form
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "This category will be permanently deleted!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: 'Yes, delete it!',
+                        cancelButtonText: 'No, cancel'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit(); // proceed with form delete
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 </body>
