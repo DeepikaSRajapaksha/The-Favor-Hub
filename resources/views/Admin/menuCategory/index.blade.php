@@ -13,9 +13,6 @@
 
     {{-- Table View of Categories --}}
     <div class="card shadow-sm border-0">
-        <div class="card-header bg-dark text-white">
-            <h5 class="mb-0">Existing Categories</h5>
-        </div>
         <div class="card-body">
             @if($categories->isEmpty())
                 <p class="text-muted text-center m-0 py-3">No categories available yet.</p>
@@ -51,7 +48,7 @@
                                     <td class="text-center">
                                         <!-- Edit Button -->
                                         <a href="{{ route('admin.menuCategory.edit', $category->id) }}" 
-                                        class="btn btn-sm btn-outline-primary me-2" title="Edit">
+                                        class="btn btn-sm btn-primary me-2" title="Edit">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
 
@@ -60,7 +57,7 @@
                                             method="POST" class="d-inline delete-form">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="button" class="btn btn-sm btn-outline-danger btn-delete" title="Delete">
+                                            <button type="button" class="btn btn-sm btn-danger btn-delete" title="Delete">
                                                 <i class="bi bi-trash"></i>
                                             </button>
                                         </form>
