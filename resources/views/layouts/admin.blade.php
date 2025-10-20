@@ -16,9 +16,12 @@
             min-height: 100vh;
         }
         .sidebar {
+            position: fixed;
             width: 270px;
+            height: 100vh;
             background-color: #212529;
             color: white;
+            overflow-y: auto;
             padding-top: 1rem;
         }
         .sidebar a {
@@ -81,11 +84,11 @@
             background-color: #bb2d3b;
         }
         .content {
-            margin: 0;
+            margin-left: 270px;          
+            height: 100vh;
+            overflow-y: auto;            
+            background-color: #cdcbcb;
             padding: 0;
-            border: none;
-            width: 100%;
-            height: 100%;
             box-sizing: border-box;
         }
         .btn-outline-primary i,
@@ -104,12 +107,12 @@
 <body>
 
     <div class="admin-wrapper">
-        {{-- Include Sidebar --}}
+        {{-- Sidebar --}}
         @include('Partial.admin-sidebar')
 
+        {{-- Scrollable Main Content --}}
         <div class="content">
 
-            {{-- Include Navbar --}}
             @include('Partial.admin-navbar')
 
             @include('Partial.flash')
@@ -117,12 +120,13 @@
             @yield('content')
 
             <br>
-            
-            {{-- Include Footer --}}
+            <br>
+            <br>
             @include('Partial.admin-footer')
-
+            
         </div>
     </div>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {

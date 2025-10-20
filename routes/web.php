@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\MenuCategoryController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Admin\POSController;
 
 Route::get('/', function () {return view('User.Home.index');});
 
@@ -39,3 +40,6 @@ Route::post('/admin/menus', [MenuController::class, 'store'])->name('admin.Menu.
 Route::get('/admin/menus/{id}/edit', [MenuController::class, 'edit'])->name('admin.Menu.edit')->middleware('admin.auth');
 Route::put('/admin/menus/{id}', [MenuController::class, 'update'])->name('admin.Menu.update')->middleware('admin.auth');
 Route::delete('/admin/menus/{id}', [MenuController::class, 'destroy'])->name('admin.Menu.destroy')->middleware('admin.auth');
+
+// POS Routes
+Route::get('/admin/pos', [POSController::class, 'index'])->name('admin.POS.index')->middleware('admin.auth');

@@ -22,15 +22,16 @@
 
             <a href="{{ route('admin.Menu.index') }}"
                class="nav-link d-flex align-items-center px-3 py-2 {{ request()->routeIs('admin.Menu.index') ? 'active' : '' }}">
-                <i class="bi bi-journal-text me-2"></i> Menu Management
+                <i class="bi bi-journal-text me-2"></i> Menu Item
             </a>
 
             <a href="#" class="nav-link d-flex align-items-center px-3 py-2">
                 <i class="bi bi-calendar2-event me-2"></i> Reservations
             </a>
 
-            <a href="#" class="nav-link d-flex align-items-center px-3 py-2">
-                <i class="bi bi-gear me-2"></i> Settings
+            <a href="{{ route('admin.POS.index') }}" 
+                class="nav-link d-flex align-items-center px-3 py-2 {{ request()->routeIs('admin.POS.index') ? 'active' : '' }}">
+                <i class="bi bi-calendar2-event me-2"></i> POS
             </a>
         </nav>
     </div>

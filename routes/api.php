@@ -25,3 +25,11 @@ Route::put('/menus/{id}', [MenuApiController::class, 'update']);
 Route::delete('/menus/{id}', [MenuApiController::class, 'destroy']);
 
 
+use App\Http\Controllers\Api\POSApiController;
+
+Route::prefix('pos')->group(function () {
+    Route::get('/menu', [POSApiController::class, 'getMenu']);           // Get all menu items
+    Route::post('/order', [POSApiController::class, 'createOrder']);     // Create new order
+    Route::get('/orders', [POSApiController::class, 'getOrders']);       // Get all orders
+    Route::get('/order/{id}', [POSApiController::class, 'getOrder']);    // Get single order
+});
