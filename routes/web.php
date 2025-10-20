@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\MenuCategoryController;
 use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\MenuController;
 
 Route::get('/', function () {return view('User.Home.index');});
 
@@ -30,3 +31,11 @@ Route::post('/admin/users', [AdminUserController::class, 'store'])->name('admin.
 Route::get('/admin/users/{id}/edit', [AdminUserController::class, 'edit'])->name('admin.users.edit')->middleware('admin.auth');
 Route::put('/admin/users/{id}', [AdminUserController::class, 'update'])->name('admin.users.update')->middleware('admin.auth');
 Route::delete('/admin/users/{id}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy')->middleware('admin.auth');
+
+// Menu Routes
+Route::get('/admin/menus', [MenuController::class, 'index'])->name('admin.Menu.index')->middleware('admin.auth');
+Route::get('/admin/menus/create', [MenuController::class, 'create'])->name('admin.Menu.create')->middleware('admin.auth');
+Route::post('/admin/menus', [MenuController::class, 'store'])->name('admin.Menu.store')->middleware('admin.auth');
+Route::get('/admin/menus/{id}/edit', [MenuController::class, 'edit'])->name('admin.Menu.edit')->middleware('admin.auth');
+Route::put('/admin/menus/{id}', [MenuController::class, 'update'])->name('admin.Menu.update')->middleware('admin.auth');
+Route::delete('/admin/menus/{id}', [MenuController::class, 'destroy'])->name('admin.Menu.destroy')->middleware('admin.auth');

@@ -6,7 +6,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h3 class="fw-bold text-dark mb-0">Menu Categories</h3>
         <a href="{{ route('admin.menuCategory.create') }}" class="btn btn-warning fw-semibold px-4">
-            + Add New Category
+            <i class="fas fa-plus"></i> Add New Category
         </a>
     </div>
 

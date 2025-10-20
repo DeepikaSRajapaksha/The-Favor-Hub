@@ -1,41 +1,73 @@
-@extends('layouts.app')
-
-@section('title', 'Admin - Menu Management')
+@extends('layouts.admin')
+@section('title', 'Menu List')
 
 @section('content')
-  <h2 class="mb-3 text-center">🧑‍🍳 Admin – Manage Menu</h2>
+<div class="container-fluid px-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="fw-bold text-dark mb-0">Menu Items</h3>
+        <a href="{{ route('admin.Menu.create') }}" class="btn btn-warning fw-semibold px-4">
+            <i class="fas fa-plus"></i> Add New Menu
+        </a>
+    </div>
 
-  <div class="text-end mb-3">
-      <a href="{{ route('admin.menu.create') }}" class="btn btn-primary">➕ Add New Item</a>
-  </div>
+    {{-- Flash Messages --}}
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered align-middle text-center mb-0">
+                  <thead class="table-dark">
+                      <tr>
+                          <th>ID</th>
+                          <th>Image</th>
+                          <th>Name</th>
+                          <th>Category</th>
+                          <th>Description</th>
+                          <th>Price (Rs.)</th>
+                          <th>Actions</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      @forelse ($menus as $key => $menu)
+                          <tr>
+                              <td>{{ $key + 1 }}</td>
+                              <td>
+                                  @if($menu->image)
+                                      <img src="{{ asset('uploads/menus/' . $menu->image) }}" width="60" height="60" class="rounded shadow-sm">
+                                  @else
+                                      <img src="{{ asset('images/no-image.png') }}" width="60" height="60" class="rounded shadow-sm">
+                                  @endif
+                              </td>
+                              <td>{{ $menu->name }}</td>
+                              <td>{{ $menu->category->name ?? '-' }}</td>
+                              <td>{{ Str::limit($menu->description, 50) }}</td>
+                              <td>{{ number_format($menu->price, 2) }}</td>
+                              <td class="text-center">
+                                  <!-- Edit Button -->
+                                  <a href="{{ route('admin.Menu.edit', $menu->id) }}" 
+                                  class="btn btn-sm btn-primary me-2" title="Edit">
+                                      <i class="bi bi-pencil-square"></i>
+                                  </a>
 
-  <table class="table table-bordered">
-    <thead class="table-dark">
-      <tr>
-        <th>#</th>
-        <th>Name</th>
-        <th>Category</th>
-        <th>Price (LKR)</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      @foreach ($menus as $menu)
-      <tr>
-        <td>{{ $menu->id }}</td>
-        <td>{{ $menu->name }}</td>
-        <td>{{ $menu->category }}</td>
-        <td>{{ number_format($menu->price, 2) }}</td>
-        <td>
-          <a href="{{ route('admin.menu.edit', $menu->id) }}" class="btn btn-sm btn-outline-success">Edit</a>
-          <form action="{{ route('admin.menu.destroy', $menu->id) }}" method="POST" style="display:inline;">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this item?')">Delete</button>
-          </form>
-        </td>
-      </tr>
-      @endforeach
-    </tbody>
-  </table>
+                                  <!-- Delete Button -->
+                                  <form action="{{ route('admin.Menu.destroy', $menu->id) }}" 
+                                      method="POST" class="d-inline delete-form">
+                                      @csrf
+                                      @method('DELETE')
+                                      <button type="button" class="btn btn-sm btn-danger btn-delete" title="Delete">
+                                          <i class="bi bi-trash"></i>
+                                      </button>
+                                  </form>
+                              </td>
+                          </tr>
+                      @empty
+                          <tr>
+                              <td colspan="7">No menu items found.</td>
+                          </tr>
+                      @endforelse
+                  </tbody>
+              </table>
+            </div>
+          </div>
+    </div>
+</div>
 @endsection
