@@ -7,6 +7,7 @@ use App\Http\Controllers\MenuCategoryController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\POSController;
+use App\Http\Controllers\Admin\OrderController;
 
 Route::get('/', function () {return view('User.Home.index');});
 
@@ -43,3 +44,7 @@ Route::delete('/admin/menus/{id}', [MenuController::class, 'destroy'])->name('ad
 
 // POS Routes
 Route::get('/admin/pos', [POSController::class, 'index'])->name('admin.POS.index')->middleware('admin.auth');
+
+// Order Routes
+Route::get('/admin/order', [OrderController::class, 'index'])->name('admin.Order.index')->middleware('admin.auth');
+

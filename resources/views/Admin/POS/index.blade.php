@@ -214,22 +214,55 @@ document.addEventListener('DOMContentLoaded', function() {
     btnCheckout.addEventListener('click', function() {
         if (cart.length === 0) return;
 
-        const orderData = {
-            items: cart.map(item => ({
-                menu_id: item.menu_id,
-                quantity: item.quantity
-            })),
-            payment_method: 'Cash'
-        };
+        const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2);
 
-        axios.post('/api/pos/order', orderData)
-            .then(response => {
-                alert('✅ Order placed successfully! Total: Rs. ' + response.data.total);
-                cart = [];
-                renderCart();
-            })
-            .catch(() => alert('❌ Failed to place order.'));
+        Swal.fire({
+            title: 'Confirm Payment',
+            html: `<p class="fs-5 fw-semibold text-dark">Total Amount: Rs. ${totalAmount}</p>
+                <p class="text-muted mb-0">Do you want to complete this order?</p>`,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#ffc107',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Yes, Pay Now',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const orderData = {
+                    items: cart.map(item => ({
+                        menu_id: item.menu_id,
+                        quantity: item.quantity
+                    })),
+                    payment_method: 'Cash'
+                };
+
+                // Send order to API
+                axios.post('/api/pos/order', orderData)
+                    .then(response => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Payment Successful!',
+                            html: `<p class="fs-6">Order placed successfully.</p>
+                                <strong>Total: Rs. ${response.data.total}</strong>`,
+                            confirmButtonColor: '#28a745'
+                        });
+
+                        cart = [];
+                        renderCart();
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Payment Failed!',
+                            text: 'There was an error placing your order. Please try again.',
+                            confirmButtonColor: '#d33'
+                        });
+                        console.error(error);
+                    });
+            }
+        });
     });
+
     document.getElementById('btn-clear').addEventListener('click', () => {
         if (cart.length === 0) return;
 

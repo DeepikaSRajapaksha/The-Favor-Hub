@@ -25,8 +25,9 @@
                 <i class="bi bi-journal-text me-2"></i> Menu Item
             </a>
 
-            <a href="#" class="nav-link d-flex align-items-center px-3 py-2">
-                <i class="bi bi-calendar2-event me-2"></i> Reservations
+            <a href="{{ route('admin.Order.index') }}" 
+                class="nav-link d-flex align-items-center px-3 py-2 {{ request()->routeIs('admin.Order.index') ? 'active' : '' }}">
+                <i class="bi bi-calendar2-event me-2"></i> Order History
             </a>
 
             <a href="{{ route('admin.POS.index') }}" 
