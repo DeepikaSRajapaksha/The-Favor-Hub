@@ -38,9 +38,29 @@
     </div>
 
     <div class="p-3 border-top">
-        <a href="#" class="btn btn-danger w-100 fw-semibold">
+        <button id="btnLogout" class="btn btn-danger w-100 fw-semibold">
             <i class="bi bi-box-arrow-right me-1"></i> Logout
-        </a>
+        </button>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+    document.getElementById('btnLogout').addEventListener('click', function() {
+        Swal.fire({
+            title: 'Logout?',
+            text: 'Are you sure you want to log out?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Yes, logout',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "{{ route('admin.logout') }}";
+            }
+        });
+    });
+    </script>
 </div>
 

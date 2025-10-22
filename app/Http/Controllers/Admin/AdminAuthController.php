@@ -35,11 +35,17 @@ class AdminAuthController extends Controller
         return back()->with('error', 'Invalid email or password.');
     }
 
-    // // Logout
-    // public function logout()
-    // {
-    //     session()->forget(['admin_id', 'admin_name']);
-    //     return redirect('/admin/login')->with('success', 'Logged out successfully.');
-    // }
+    // Logout
+    public function logout()
+    {
+        // Forget session values
+        session()->forget(['admin_id', 'admin_name']);
+
+        // Optionally clear all session data (for safety)
+        session()->flush();
+
+        // Redirect back to login with success message
+        return redirect()->route('admin.login')->with('success', 'Logged out successfully.');
+    }
 }
 
