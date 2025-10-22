@@ -8,12 +8,26 @@ use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\POSController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\User\UserMenuController;
+use App\Http\Controllers\HomeController;
 
 Route::get('/', function () {return view('User.Home.index');});
+
+Route::get('/menu', function () {return view('User.menu.index');});
+
+Route::get('/about', function () {return view('User.About.index');});
+
+Route::get('/contact', function () {return view('User.Contact.index');});
 
 Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login.submit');
 Route::get('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
+
+// User menu controller
+Route::get('/menu', [UserMenuController::class, 'index'])->name('User.menu.index');
+
+// Home controller
+Route::get('/', [HomeController::class, 'index'])->name('User.Home.index');
 
 // Dashboard (protected)
 Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard.index')->middleware('admin.auth');

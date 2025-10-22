@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Home')
+
 @section('content')
 
 {{-- ===== Hero Section ===== --}}
@@ -16,14 +18,40 @@
 </section>
 
 {{-- ===== About Section ===== --}}
-<section id="about" class="py-5 bg-light text-center">
+<section id="about" class="py-5 bg-light">
     <div class="container">
-        <h2 class="fw-bold mb-4">About The Flavor Hub</h2>
-        <p class="text-muted mb-5">
-            At <strong>The Flavor Hub</strong>, we bring together the perfect blend of authenticity, taste, and atmosphere.  
-            Our chefs craft each dish with passion and locally sourced ingredients, ensuring a memorable dining experience.
-        </p>
-        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=900&q=80" class="img-fluid rounded shadow-lg" alt="Restaurant Interior">
+        <div class="row align-items-center g-5">
+            
+            {{-- 🔹 Left: Image --}}
+            <div class="col-md-6 animate__animated animate__fadeInLeft">
+                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=900&q=80" 
+                     class="img-fluid rounded-4 shadow-lg" 
+                     alt="Restaurant Interior"
+                     style="object-fit: cover;">
+            </div>
+
+            {{-- 🔹 Right: About Content --}}
+            <div class="col-md-6 text-center text-md-start animate__animated animate__fadeInRight">
+                <h2 class="fw-bold mb-4 text-warning">About <span class="text-dark">The Flavor Hub</span></h2>
+                <p class="text-muted mb-4 fs-5">
+                    Welcome to <strong>The Flavor Hub</strong> — where culinary artistry meets warm hospitality.  
+                    We take pride in crafting dishes that celebrate local ingredients, vibrant flavors,  
+                    and a passion for perfection. Whether it’s a cozy dinner or a grand celebration,  
+                    every moment here is designed to delight your senses.
+                </p>
+
+                <ul class="list-unstyled text-muted mb-4">
+                    <li><i class="bi bi-check-circle-fill text-warning me-2"></i> Locally sourced ingredients</li>
+                    <li><i class="bi bi-check-circle-fill text-warning me-2"></i> Authentic global flavors</li>
+                    <li><i class="bi bi-check-circle-fill text-warning me-2"></i> Cozy and elegant atmosphere</li>
+                </ul>
+
+                <a href="/menu" class="btn btn-warning fw-semibold px-4 py-2 rounded-pill shadow-sm">
+                    Explore Menu
+                </a>
+            </div>
+
+        </div>
     </div>
 </section>
 
@@ -34,35 +62,46 @@
         <p class="text-muted mb-5">A curated selection of our most-loved creations 🍕🍣🥗</p>
 
         <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card border-0 shadow-sm">
-                    <img src="https://images.unsplash.com/photo-1604147706283-d68287a7b28d?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Steak">
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold">Grilled Steak</h5>
-                        <p class="text-muted">Perfectly seasoned and flame-grilled to perfection.</p>
+            @forelse($featuredMenus as $menu)
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm">
+                        <img src="{{ asset('uploads/menus/' . $menu->image) }}" 
+                             class="card-img-top" 
+                             alt="{{ $menu->name }}" 
+                             style="height: 230px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">{{ $menu->name }}</h5>
+                            <p class="text-muted">{{ Str::limit($menu->description, 80) }}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @empty
+                <p class="text-muted">No featured dishes available.</p>
+            @endforelse
+        </div>
+    </div>
+</section>
 
-            <div class="col-md-4">
-                <div class="card border-0 shadow-sm">
-                    <img src="https://images.unsplash.com/photo-1606756790138-8f9c1690c153?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Pasta">
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold">Creamy Pasta</h5>
-                        <p class="text-muted">Rich cream sauce tossed with fresh herbs and parmesan.</p>
+{{-- ===== Categories Section ===== --}}
+<section id="categories" class="py-5 bg-light text-center">
+    <div class="container">
+        <h2 class="fw-bold mb-4">Explore Our Categories</h2>
+        <div class="row g-4">
+            @forelse($categories as $category)
+                <div class="col-md-3 col-sm-6">
+                    <div class="card border-0 shadow-sm">
+                        <img src="{{ asset('uploads/menuCategory/' . $category->image) }}" 
+                             class="card-img-top" 
+                             alt="{{ $category->name }}"
+                             style="height: 180px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title fw-semibold">{{ $category->name }}</h5>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card border-0 shadow-sm">
-                    <img src="https://images.unsplash.com/photo-1576402187878-974f70e1ed6a?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Sushi">
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold">Sushi Platter</h5>
-                        <p class="text-muted">Freshly rolled sushi served with authentic wasabi and soy.</p>
-                    </div>
-                </div>
-            </div>
+            @empty
+                <p class="text-muted">No categories available.</p>
+            @endforelse
         </div>
     </div>
 </section>

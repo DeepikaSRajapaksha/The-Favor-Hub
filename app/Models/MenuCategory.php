@@ -22,9 +22,8 @@ class MenuCategory extends Model
         });
     }
 
-    // // Relationship (optional): a category can have many menus
-    // public function menus()
-    // {
-    //     return $this->hasMany(Menu::class);
-    // }
+    public function menus()
+    {
+        return $this->hasMany(Menu::class, 'category_id');
+    }
 }
