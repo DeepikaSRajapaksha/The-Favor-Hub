@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\POSController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\User\UserMenuController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserCartController;
 
 Route::get('/', function () {return view('User.Home.index');});
 
@@ -62,3 +63,11 @@ Route::get('/admin/pos', [POSController::class, 'index'])->name('admin.POS.index
 // Order Routes
 Route::get('/admin/order', [OrderController::class, 'index'])->name('admin.Order.index')->middleware('admin.auth');
 
+// USER CART ROUTES
+Route::get('/cart', [UserCartController::class, 'index'])->name('user.cart');
+Route::post('/cart/add', [UserCartController::class, 'add'])->name('user.cart.add');
+Route::get('/cart/remove/{id}', [UserCartController::class, 'remove'])->name('user.cart.remove');
+Route::get('/cart/clear', [UserCartController::class, 'clear'])->name('user.cart.clear');
+Route::post('/place-order', [UserCartController::class, 'placeOrder'])->name('user.place.order');
+Route::get('/order-success', [UserCartController::class, 'success'])->name('User.order-success.index');
+Route::get('/cart' , [UserCartController::class, 'index'])->name('User.cart.index');
